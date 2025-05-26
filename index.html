@@ -235,22 +235,32 @@
     }
 
 
-    function mostrarPelículaFinal() {
+function mostrarPelículaFinal() {
+  // Quita todos los títulos que estén cayendo
   document.querySelectorAll('.movie').forEach(el => el.remove());
+
+  // Elige una película al azar
   const peli = peliculas[Math.floor(Math.random() * peliculas.length)];
   const contenedor = document.getElementById('destacada');
+
+  // Muestra el título en el centro
   contenedor.innerHTML = `<div><strong>${peli.titulo}</strong></div><div>por: ${peli.director}</div>`;
   contenedor.style.opacity = 1;
 
+  // Después de 10 segundos: oculta el título, vuelve a mostrar el botón y reinicia la lluvia
   setTimeout(() => {
     contenedor.style.opacity = 0;
+    contenedor.innerHTML = ''; // Limpia el contenido
     boton.style.display = 'block';
+
+    // Reiniciar estado
     lluviaActiva = true;
     calcularColumnas();
     reiniciarColumnas();
     iniciarLluvia();
-  }, 10000);
+  }, 10000); // 10 segundos
 }
+
 
     
 
