@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lluvia de pelis</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            color: white;
+            font-family: sans-serif;
+            position: relative;
+            height: 100vh;
+        }
+
+        .movie {
+            position: absolute;
+            text-align: center;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow-wrap: break-word;
+            animation-name: fall;
+            animation-timing-function: linear;
+            line-height: 1.2;
+            animation-play-state: running;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -50px;
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+
+        .destacada {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 2em;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 999;
+        }
+
+        #botonMostrar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 12px 24px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border: 2px solid white;
+            /* background: transparent; */
+            background: black;
+            color: white;
+            z-index: 1000;
+            /* arriba de los textos */
+            border-radius: 8px;
+            user-select: none;
+        }
+
+        #botonMostrar:hover {
+            background: white;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="botonMostrar">peli?? :))</button>
+    <div id="destacada" class="destacada"></div>
+
+    <script>
+        const peliculas = [
+            { titulo: "La peor persona del mundo", director: "Joachim Trier" },
+            { titulo: "Beoning", director: "Lee Chang-dong" },
+            { titulo: "París, Texas", director: "Wim Wenders" },
+            { titulo: "Gegen die Wand", director: "Fatih Akin" },
+            { titulo: "Vírgenes suicidas", director: "Sofia Coppola" },
+            { titulo: "Dulzura americana", director: "Andrea Arnold" },
+            { titulo: "Pvt Chat", director: "Ben Hozie" },
+            { titulo: "In den Gängen", director: "Thomas Stuber" },
+            { titulo: "Pasajes", director: "Ira Sachs" },
+            { titulo: "Her", director: "Spike Jonze" },
+            { titulo: "Nubes pasajeras", director: "Aki Kaurismäki" },
+            { titulo: "Buffalo '66", director: "Vincent Gallo" },
+            { titulo: "Vidas pasadas", director: "Celine Song" },
+            { titulo: "La langosta", director: "Yorgos Lanthimos" },
+
+            { titulo: "Retrato de una mujer en llamas", director: "Céline Sciamma" },
+            { titulo: "Heaven Knows What", director: "Benny Safdie, Josh Safdie" },
+            { titulo: "Paterson", director: "Jim Jarmusch" },
+            { titulo: "Happy Together. Historia de un encuentro", director: "Wong Kar-Wai" },
+
+        ];
+
+        const columnas = 15;
+        const anchoPantalla = window.innerWidth;
+        const anchoColumna = anchoPantalla / columnas;
+
+        const tiempoMinEntreNombres = 3000;
+
+        const velocidadBaseMin = 5;
+        const velocidadBaseMax = 12;
+
+        const ultimoTiempoPorColumna = Array(columnas).fill(0);
+        const velocidadPorColumna = [];
+
+        for (let i = 0; i < columnas; i++) {
+            velocidadPorColumna[i] = (Math.random() * (velocidadBaseMax - velocidadBaseMin) + velocidadBaseMin).toFixed(2);
+        }
+
+        let lluviaActiva = true;
+        let intervaloLluvia;
+
+        function crearNombre(columna) {
+            const pelicula = peliculas[Math.floor(Math.random() * peliculas.length)];
+            const nombre = document.createElement('div');
+            nombre.className = 'movie';
+
+            // Vaciar contenido para luego agregar palabra por palabra en líneas separadas
+            nombre.innerHTML = '';
+
+            // Separamos el título en palabras
+            const palabras = pelicula.titulo.split(' ');
+
+            // Para cada palabra, creamos un span con display block y margen inferior aleatorio
+            palabras.forEach(palabra => {
+                const span = document.createElement('span');
+                span.textContent = palabra;
+                span.style.display = 'block';
+
+                // Definir opciones de alineación
+                const alineaciones = ['left', 'center', 'right'];
+
+                // Elegir una alineación aleatoria
+                const alineacionAleatoria = alineaciones[Math.floor(Math.random() * alineaciones.length)];
+                span.style.textAlign = alineacionAleatoria;
+
+
+                // margen inferior aleatorio entre 2px y 10px para variar el espaciado
+                span.style.marginBottom = `${Math.random() * 8 + 2}px`;
+                nombre.appendChild(span);
+            });
+
+            const left = columna * anchoColumna;
+            nombre.style.left = `${left}px`;
+            nombre.style.width = `${anchoColumna}px`;
+            nombre.style.fontSize = `16px`;
+            nombre.style.animationDuration = `${velocidadPorColumna[columna]}s`;
+
+            document.body.appendChild(nombre);
+
+            ultimoTiempoPorColumna[columna] = Date.now();
+
+            nombre.addEventListener('animationend', () => {
+                if (lluviaActiva) {
+                    nombre.remove();
+                }
+            });
+        }
+
+
+        function iniciarLluvia() {
+            intervaloLluvia = setInterval(() => {
+                if (!lluviaActiva) {
+                    clearInterval(intervaloLluvia);
+                    return;
+                }
+
+                const ahora = Date.now();
+
+                for (let i = 0; i < columnas; i++) {
+                    if (ahora - ultimoTiempoPorColumna[i] >= tiempoMinEntreNombres && Math.random() < 0.25) {
+                        crearNombre(i);
+                    }
+                }
+            }, 300);
+        }
+
+        function pausarAnimaciones() {
+            document.querySelectorAll('.movie').forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
+        }
+
+        function mostrarPelículaFinal() {
+            document.querySelectorAll('.movie').forEach(el => el.remove());
+
+            const peli = peliculas[Math.floor(Math.random() * peliculas.length)];
+            const contenedor = document.getElementById('destacada');
+            contenedor.innerHTML = `<div><strong>${peli.titulo}</strong></div><div>Dirigida por: ${peli.director}</div>`;
+            contenedor.style.opacity = 1;
+        }
+
+        const boton = document.getElementById('botonMostrar');
+
+        boton.addEventListener('click', () => {
+            lluviaActiva = false;
+            clearInterval(intervaloLluvia);
+            pausarAnimaciones();
+
+            boton.style.display = 'none';
+
+            setTimeout(mostrarPelículaFinal, 100);
+        });
+
+        // Mostrar/ocultar títulos al pasar el mouse sobre el botón
+        boton.addEventListener('mouseenter', () => {
+            document.querySelectorAll('.movie').forEach(el => {
+                el.style.opacity = 0;
+            });
+        });
+        boton.addEventListener('mouseleave', () => {
+            document.querySelectorAll('.movie').forEach(el => {
+                el.style.opacity = 1;
+            });
+        });
+
+        iniciarLluvia();
+    </script>
+
+</body>
+
+</html>
