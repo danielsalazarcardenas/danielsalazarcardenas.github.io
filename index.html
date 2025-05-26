@@ -75,7 +75,8 @@
       user-select: none;
     }
 
-    #botonMostrar:hover {
+
+    #botonMostrar.hover {
       background: white;
       color: black;
     }
@@ -104,6 +105,7 @@
   <div id="destacada" class="destacada"></div>
 
   <script>
+
     const peliculas = [
       { titulo: "La peor persona del mundo", director: "Joachim Trier" },
       { titulo: "Beoning", director: "Lee Chang-dong" },
@@ -124,7 +126,7 @@
       { titulo: "Paterson", director: "Jim Jarmusch" },
       { titulo: "Happy Together. Historia de un encuentro", director: "Wong Kar-Wai" },
 
-      
+
       { titulo: "All of us strangers", director: "Andrew Haigh" },
       { titulo: "Monster", director: "Hirokazu Koreeda" },
       { titulo: "La pianista", director: "Michael Haneke" },
@@ -225,9 +227,7 @@
             crearNombre(i);
           }
         }
-        boton.style.display = 'none'; // Forzar reinicio visual
-        boton.style.display = 'block';
-        
+
       }, 300);
     }
 
@@ -238,34 +238,48 @@
     }
 
 
-function mostrarPelículaFinal() {
-  // Quita todos los títulos que estén cayendo
-  document.querySelectorAll('.movie').forEach(el => el.remove());
+    function mostrarPelículaFinal() {
+      // Quita todos los títulos que estén cayendo
+      document.querySelectorAll('.movie').forEach(el => el.remove());
 
-  // Elige una película al azar
-  const peli = peliculas[Math.floor(Math.random() * peliculas.length)];
-  const contenedor = document.getElementById('destacada');
+      // Elige una película al azar
+      const peli = peliculas[Math.floor(Math.random() * peliculas.length)];
+      const contenedor = document.getElementById('destacada');
 
-  // Muestra el título en el centro
-  contenedor.innerHTML = `<div><strong>${peli.titulo}</strong></div><div>por: ${peli.director}</div>`;
-  contenedor.style.opacity = 1;
+      // Muestra el título en el centro
+      contenedor.innerHTML = `<div><strong>${peli.titulo}</strong></div><div>por: ${peli.director}</div>`;
+      contenedor.style.opacity = 1;
 
-  // Después de 10 segundos: oculta el título, vuelve a mostrar el botón y reinicia la lluvia
-  setTimeout(() => {
-    contenedor.style.opacity = 0;
-    contenedor.innerHTML = ''; // Limpia el contenido
-    // Reiniciar estado
-    lluviaActiva = true;
-    calcularColumnas();
-    reiniciarColumnas();
-    iniciarLluvia();
-  }, 10000); // 10 segundos
-}
+      // Después de 10 segundos: oculta el título, vuelve a mostrar el botón y reinicia la lluvia
+      setTimeout(() => {
+        contenedor.style.display = 'none';
+        contenedor.style.opacity = 0;
+        contenedor.innerHTML = ''; // Limpia el contenido
+        boton.classList.remove('hover');
+        boton.style.display = 'block';
+
+        // Reiniciar estado
+        lluviaActiva = true;
+        calcularColumnas();
+        reiniciarColumnas();
+        iniciarLluvia();
+        contenedor.style.display = 'block';
+      }, 10000); // 10 segundos
+    }
 
 
-    
+
 
     const boton = document.getElementById('botonMostrar');
+
+    boton.addEventListener('mouseenter', () => {
+      boton.classList.add('hover');
+    });
+    boton.addEventListener('mouseleave', () => {
+      boton.classList.remove('hover');
+    });
+
+
 
     boton.addEventListener('click', () => {
       lluviaActiva = false;
@@ -291,7 +305,6 @@ function mostrarPelículaFinal() {
         }
       }
     });
-
     iniciarLluvia();
   </script>
 </body>
