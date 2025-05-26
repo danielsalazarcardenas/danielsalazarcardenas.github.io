@@ -225,6 +225,9 @@
             crearNombre(i);
           }
         }
+        boton.style.display = 'none'; // Forzar reinicio visual
+        boton.style.display = 'block';
+        
       }, 300);
     }
 
@@ -251,13 +254,6 @@ function mostrarPelículaFinal() {
   setTimeout(() => {
     contenedor.style.opacity = 0;
     contenedor.innerHTML = ''; // Limpia el contenido
-  
-boton.style.display = 'none'; // Forzar reinicio visual
-setTimeout(() => {
-  boton.style.display = 'block';
-}, 50); // reaparece "reseteado"
-
-
     // Reiniciar estado
     lluviaActiva = true;
     calcularColumnas();
