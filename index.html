@@ -83,11 +83,11 @@
     /* MOVIL */
     @media (max-width: 600px) {
       body {
-        font-size: 16px;
+        font-size: 14px;
       }
 
       .movie {
-        font-size: 16px;
+        font-size: 14px;
       }
 
       #botonMostrar {
@@ -185,6 +185,7 @@
       const left = columna * anchoColumna;
       nombre.style.left = `${left}px`;
       nombre.style.width = `${anchoColumna}px`;
+      nombre.style.fontSize = `16px`;
      // nombre.style.fontSize = `${anchoColumna * 0.15}px`;
       nombre.style.animationDuration = `${velocidadPorColumna[columna]}s`;
 
