@@ -81,26 +81,25 @@
             color: black;
         }
 
-    // MOVIL
+        /* MOVIL */
 
         @media (max-width: 600px) {
-  body {
-    font-size: 14px;
-  }
+            body {
+                font-size: 14px;
+            }
 
-  .movie {
-    font-size: 14px;
-    width: 100%;
-    left: 0 !important;
-    text-align: center !important;
-  }
+            .movie {
+                font-size: 14px;
+                width: 100%;
+                left: 0 !important;
+                text-align: center !important;
+            }
 
-  #botonMostrar {
-    font-size: 1em;
-    padding: 10px 20px;
-  }
-}
-        
+            #botonMostrar {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+        }
     </style>
 </head>
 
@@ -132,8 +131,8 @@
             { titulo: "Happy Together. Historia de un encuentro", director: "Wong Kar-Wai" },
 
         ];
-        
-// MOVIL
+
+        // MOVIL
         const columnas = window.innerWidth < 600 ? 6 : 15;
 
         const anchoPantalla = window.innerWidth;
@@ -159,22 +158,16 @@
             const nombre = document.createElement('div');
             nombre.className = 'movie';
 
-            // Vaciar contenido para luego agregar palabra por palabra en líneas separadas
             nombre.innerHTML = '';
 
-            // Separamos el título en palabras
             const palabras = pelicula.titulo.split(' ');
 
-            // Para cada palabra, creamos un span con display block y margen inferior aleatorio
             palabras.forEach(palabra => {
                 const span = document.createElement('span');
                 span.textContent = palabra;
                 span.style.display = 'block';
-
-                // Definir opciones de alineación
                 const alineaciones = ['left', 'center', 'right'];
 
-                // Elegir una alineación aleatoria
                 const alineacionAleatoria = alineaciones[Math.floor(Math.random() * alineaciones.length)];
                 span.style.textAlign = alineacionAleatoria;
 
@@ -248,17 +241,19 @@
             setTimeout(mostrarPelículaFinal, 100);
         });
 
-        // Mostrar/ocultar títulos al pasar el mouse sobre el botón
-        boton.addEventListener('mouseenter', () => {
-            document.querySelectorAll('.movie').forEach(el => {
-                el.style.opacity = 0;
-            });
-        });
-        boton.addEventListener('mouseleave', () => {
-            document.querySelectorAll('.movie').forEach(el => {
-                el.style.opacity = 1;
-            });
-        });
+
+
+        // // Mostrar/ocultar títulos al pasar el mouse sobre el botón
+        // boton.addEventListener('mouseenter', () => {
+        //     document.querySelectorAll('.movie').forEach(el => {
+        //         el.style.opacity = 0;
+        //     });
+        // });
+        // boton.addEventListener('mouseleave', () => {
+        //     document.querySelectorAll('.movie').forEach(el => {
+        //         el.style.opacity = 1;
+        //     });
+        // });
 
         iniciarLluvia();
     </script>
