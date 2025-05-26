@@ -80,6 +80,27 @@
             background: white;
             color: black;
         }
+
+    // MOVIL
+
+        @media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  .movie {
+    font-size: 14px;
+    width: 100%;
+    left: 0 !important;
+    text-align: center !important;
+  }
+
+  #botonMostrar {
+    font-size: 1em;
+    padding: 10px 20px;
+  }
+}
+        
     </style>
 </head>
 
@@ -111,8 +132,10 @@
             { titulo: "Happy Together. Historia de un encuentro", director: "Wong Kar-Wai" },
 
         ];
+        
+// MOVIL
+        const columnas = window.innerWidth < 600 ? 6 : 15;
 
-        const columnas = 15;
         const anchoPantalla = window.innerWidth;
         const anchoColumna = anchoPantalla / columnas;
 
