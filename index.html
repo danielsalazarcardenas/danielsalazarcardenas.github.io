@@ -17,8 +17,6 @@ background-color: #00113d;
 background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
 
 
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
   /* background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png') #0a2540; */
   color: #ffffff;
   font-family: 'Outfit', sans-serif;
@@ -91,7 +89,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
   padding: 14px 28px;
-  font-size: 1.2em;
+  font-size: 1.4em;
   cursor: pointer;
   border: 2px solid #ffffff;
   background: rgba(255, 255, 255, 0.05);
@@ -212,8 +210,8 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
     window.addEventListener('resize', calcularColumnas);
 
     const tiempoMinEntreNombres = 3000;
-    const velocidadBaseMin = 6;
-    const velocidadBaseMax = 14;
+    const velocidadBaseMin = 4;
+    const velocidadBaseMax = 10;
 
     let ultimoTiempoPorColumna = [];
     let velocidadPorColumna = [];
@@ -249,7 +247,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
       const left = columna * anchoColumna;
       nombre.style.left = `${left}px`;
       nombre.style.width = `${anchoColumna}px`;
-      nombre.style.fontSize = `16px`;
+      nombre.style.fontSize = `18px`;
       nombre.style.animationDuration = `${velocidadPorColumna[columna]}s`;
 
       document.body.appendChild(nombre);
